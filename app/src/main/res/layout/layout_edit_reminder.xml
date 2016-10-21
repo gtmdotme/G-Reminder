@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText_reminder_label"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:hint="Label"
+        android:textAlignment="center" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:id="@+id/date_picker_button"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/time_picker_button"
+        android:layout_alignEnd="@+id/time_picker_button" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time"
+        android:id="@+id/time_picker_button"
+        android:layout_below="@+id/editText_reminder_label"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Current Date"
+        android:id="@+id/date_display_textView"
+        android:layout_alignBaseline="@+id/time_picker_button"
+        android:layout_toLeftOf="@+id/date_picker_button"
+        android:layout_toStartOf="@+id/date_picker_button" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Current Date"
+        android:id="@+id/time_display_textView"
+        android:layout_alignBaseline="@+id/date_picker_button"
+        android:layout_toLeftOf="@+id/date_picker_button"
+        android:layout_toStartOf="@+id/date_picker_button" />
+
+</RelativeLayout>
