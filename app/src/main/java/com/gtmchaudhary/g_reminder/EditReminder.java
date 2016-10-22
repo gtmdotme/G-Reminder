@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,7 @@ public class EditReminder extends Activity{
     Calendar calendar;
 
     Button date_picker_button, time_picker_button;
+    Button save_button, discardButton;
     TextView date_display_textView, time_display_textView;
     Switch allDay_switch;
 
@@ -41,11 +43,33 @@ public class EditReminder extends Activity{
         // Referencing UI/UX widgets
         date_picker_button = (Button)findViewById(R.id.date_picker_button);
         time_picker_button = (Button)findViewById(R.id.time_picker_button);
+        save_button = (Button)findViewById(R.id.save_button);
+        discardButton = (Button)findViewById(R.id.discard_button);
         date_display_textView = (TextView)findViewById(R.id.date_display_textView);
         time_display_textView = (TextView)findViewById(R.id.time_display_textView);
         allDay_switch = (Switch)findViewById(R.id.allDay_switch);
 
 
+
+        // SAVE button
+        save_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Go Back to Home-Screen
+                onBackPressed();
+
+                //Save Reminder to DataBase
+            }
+        });
+
+        // DISCARD button
+        discardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Just go back to Home-Screen
+                onBackPressed();
+            }
+        });
 
         // All-Day switch functionality
         allDay_switch.setChecked(false);
@@ -119,4 +143,14 @@ public class EditReminder extends Activity{
             date_display_textView.setText(sdf.format(calendar.getTime()));
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+        //super.onBackPressed();
+    }
+
 }
