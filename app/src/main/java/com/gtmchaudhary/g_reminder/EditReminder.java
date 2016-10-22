@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -47,11 +48,16 @@ public class EditReminder extends Activity{
 
 
         // All-Day switch functionality
-        if (allDay_switch.isChecked())
-            time_picker_button.setEnabled(false);
-        else
-            time_picker_button.setEnabled(true);
-
+        allDay_switch.setChecked(false);
+        allDay_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    time_picker_button.setEnabled(false);
+                else
+                    time_picker_button.setEnabled(true);
+            }
+        });
 
 
         // TimePickerButtonListener

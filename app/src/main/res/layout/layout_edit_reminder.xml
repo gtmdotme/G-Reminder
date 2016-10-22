@@ -64,6 +64,6 @@
         android:layout_toEndOf="@+id/time_picker_button"
         android:layout_marginLeft="27dp"
         android:layout_marginStart="27dp"
-        android:checked="false" />
+        android:checked="true" />
 
 </RelativeLayout>
