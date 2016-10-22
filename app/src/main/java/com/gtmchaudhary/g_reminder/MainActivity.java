@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         myRecyclerView.setLayoutManager(myLayoutManager);
 
         // set Adapter to RecyclerView
-        MyAdapter myAdapter = new MyAdapter(this, reminders);
-        myRecyclerView.setAdapter(myAdapter);
+        //MyAdapter myAdapter = new MyAdapter(this, reminders);
+        //myRecyclerView.setAdapter(myAdapter);
 
         /************** FAB onClickListener **************/
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

@@ -23,8 +23,7 @@ public class EditReminder extends Activity{
     public static int TIME_PICKER_ID = 1;
     public static int DATE_PICKER_ID = 2;
 
-    public int hour_x, minute_x;
-    public int day_x, month_x, year_x;
+    Calendar calendar;
 
     Button date_picker_button, time_picker_button;
     TextView date_display_textView, time_display_textView;
@@ -55,36 +54,32 @@ public class EditReminder extends Activity{
                 showDialog(DATE_PICKER_ID);
             }
         });
+
+        // Get current date
+        calendar = Calendar.getInstance();
+
+        time_display_textView.setText(new SimpleDateFormat("hh:mm aa").format(calendar.getTime()));
+        date_display_textView.setText(new SimpleDateFormat("dd MMM, yyyy").format(calendar.getTime()));
     }
 
 
     @Override
     protected Dialog onCreateDialog(int id) {
         if(id == TIME_PICKER_ID)
-            return new TimePickerDialog(this, timePickerListener, hour_x, minute_x, false);
+            return new TimePickerDialog(this, timePickerListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
         else if(id == DATE_PICKER_ID)
-            return new DatePickerDialog(this, datePickerListener, year_x, month_x, day_x);
+            return new DatePickerDialog(this, datePickerListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         return null;
     }
+
 
     protected TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            /*hour_x = hourOfDay;
-            minute_x = minute;
-
-            String amPM = "AM";
-            if(hour_x>12){
-                hour_x = hour_x - 12;
-                amPM = "PM";
-            }
-            time_display_textView.setText(hour_x + " : " + minute + amPM );
-            */
-            Date date = new Date();
-            date.setHours(hourOfDay);
-            date.setMinutes(minute);
-            SimpleDateFormat sdf = new SimpleDateFormat("hh:ss aa");
-            time_display_textView.setText(sdf.format(date));
+            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            calendar.set(Calendar.MINUTE, minute);
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
+            time_display_textView.setText(sdf.format(calendar.getTime()));
 
         }
     };
@@ -92,8 +87,9 @@ public class EditReminder extends Activity{
     protected DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(year, monthOfYear, dayOfMonth);
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, yyyy");
             date_display_textView.setText(sdf.format(calendar.getTime()));
         }
