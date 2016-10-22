@@ -68,8 +68,8 @@ public class EditReminder extends Activity{
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             hour_x = hourOfDay;
             minute_x = minute;
-
-            time_display_textView.setText("");
+//***********************************************************************************************************
+            time_display_textView.setText("");/*************************************************/
         }
     };
 

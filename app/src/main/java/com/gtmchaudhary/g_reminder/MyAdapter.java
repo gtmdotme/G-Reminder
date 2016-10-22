@@ -33,16 +33,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             label_reminder = (TextView)itemView.findViewById(R.id.label_reminder);
             id_reminder = (TextView)itemView.findViewById(R.id.id_reminder);
             // Define click listener for the ViewHolder's View.
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "Reminder-> " + label_reminder.getText().toString());
-                    //Perform action on click
-
-
-                }
-            });
-
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -51,6 +41,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     /* read from id and pass reminder through intent */
 
                     Log.d(TAG, "Card Clicked");
+                    Log.d(TAG, "Reminder-> " + label_reminder.getText().toString());
                 }
 
             });
