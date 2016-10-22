@@ -17,6 +17,8 @@
         </activity>
         <activity android:name=".EditReminder">
         </activity>
+        <activity android:name=".ViewReminder">
+        </activity>
 
     </application>
 

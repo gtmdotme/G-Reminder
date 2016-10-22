@@ -30,7 +30,7 @@ public class EditReminder extends Activity{
 
     Button date_picker_button, time_picker_button;
     Button save_button, discardButton;
-    TextView date_display_textView, time_display_textView;
+    TextView date_display_textView, time_display_textView, id_display_textView;
     Switch allDay_switch;
 
     @Override
@@ -47,6 +47,7 @@ public class EditReminder extends Activity{
         discardButton = (Button)findViewById(R.id.discard_button);
         date_display_textView = (TextView)findViewById(R.id.date_display_textView);
         time_display_textView = (TextView)findViewById(R.id.time_display_textView);
+        id_display_textView = (TextView)findViewById(R.id.id_reminder_edit);
         allDay_switch = (Switch)findViewById(R.id.allDay_switch);
 
 

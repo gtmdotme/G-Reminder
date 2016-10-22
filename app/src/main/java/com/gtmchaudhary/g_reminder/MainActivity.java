@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Click action
-                Intent intent = new Intent(MainActivity.this, EditReminder.class);
+                Intent intent = new Intent(MainActivity.this, ViewReminder.class);
                 startActivity(intent);
 
                 Log.d(TAG, "FAB clicked");
