@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -27,17 +28,31 @@ public class EditReminder extends Activity{
 
     Button date_picker_button, time_picker_button;
     TextView date_display_textView, time_display_textView;
+    Switch allDay_switch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_edit_reminder);
 
+
+
         // Referencing UI/UX widgets
         date_picker_button = (Button)findViewById(R.id.date_picker_button);
         time_picker_button = (Button)findViewById(R.id.time_picker_button);
         date_display_textView = (TextView)findViewById(R.id.date_display_textView);
         time_display_textView = (TextView)findViewById(R.id.time_display_textView);
+        allDay_switch = (Switch)findViewById(R.id.allDay_switch);
+
+
+
+        // All-Day switch functionality
+        if (allDay_switch.isChecked())
+            time_picker_button.setEnabled(false);
+        else
+            time_picker_button.setEnabled(true);
+
+
 
         // TimePickerButtonListener
         time_picker_button.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +62,8 @@ public class EditReminder extends Activity{
             }
         });
 
+
+
         // DatePickerButtonListener
         date_picker_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +71,8 @@ public class EditReminder extends Activity{
                 showDialog(DATE_PICKER_ID);
             }
         });
+
+
 
         // Get current date
         calendar = Calendar.getInstance();
