@@ -11,6 +11,10 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by gtmchaudhary on 10/20/2016.
  */
@@ -66,21 +70,32 @@ public class EditReminder extends Activity{
     protected TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            hour_x = hourOfDay;
+            /*hour_x = hourOfDay;
             minute_x = minute;
-//***********************************************************************************************************
-            time_display_textView.setText("");/*************************************************/
+
+            String amPM = "AM";
+            if(hour_x>12){
+                hour_x = hour_x - 12;
+                amPM = "PM";
+            }
+            time_display_textView.setText(hour_x + " : " + minute + amPM );
+            */
+            Date date = new Date();
+            date.setHours(hourOfDay);
+            date.setMinutes(minute);
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:ss aa");
+            time_display_textView.setText(sdf.format(date));
+
         }
     };
 
     protected DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            year_x = year;
-            month_x = monthOfYear;
-            day_x = dayOfMonth;
-
-
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, monthOfYear, dayOfMonth);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, yyyy");
+            date_display_textView.setText(sdf.format(calendar.getTime()));
         }
     };
 }
