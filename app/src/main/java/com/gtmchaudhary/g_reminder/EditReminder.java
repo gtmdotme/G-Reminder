@@ -5,11 +5,15 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -25,12 +29,14 @@ public class EditReminder extends Activity{
 
     public static int TIME_PICKER_ID = 1;
     public static int DATE_PICKER_ID = 2;
+    public static String TAG = "myReminderApp";
 
     Calendar calendar;
 
     Button date_picker_button, time_picker_button;
     Button save_button, discardButton;
     TextView date_display_textView, time_display_textView, id_display_textView;
+    EditText label_editText;
     Switch allDay_switch;
 
     @Override
@@ -43,23 +49,60 @@ public class EditReminder extends Activity{
         // Referencing UI/UX widgets
         date_picker_button = (Button)findViewById(R.id.date_picker_button);
         time_picker_button = (Button)findViewById(R.id.time_picker_button);
+
         save_button = (Button)findViewById(R.id.save_button);
         discardButton = (Button)findViewById(R.id.discard_button);
+
         date_display_textView = (TextView)findViewById(R.id.date_display_textView);
         time_display_textView = (TextView)findViewById(R.id.time_display_textView);
         id_display_textView = (TextView)findViewById(R.id.id_reminder_edit);
+        label_editText = (EditText)findViewById(R.id.editText_reminder_label);
         allDay_switch = (Switch)findViewById(R.id.allDay_switch);
 
+        // Get the intent
+        Intent intent = getIntent();
+        final Reminder recievedReminderViaIntent = (Reminder)intent.getSerializableExtra("object");
 
 
         // SAVE button
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Go Back to Home-Screen
-                onBackPressed();
+                Reminder reminder = new Reminder(
+                        label_editText.getText().toString().trim(),
+                        date_display_textView.getText().toString(),
+                        time_display_textView.getText().toString()
+                );
+                DatabaseHelper db = new DatabaseHelper(getApplicationContext());
 
-                //Save Reminder to DataBase
+                if(reminder.getLabel().isEmpty()){
+                    label_editText.setError("Label Should not be blank");
+                }
+                else {
+                    if (recievedReminderViaIntent.getId() > 0){//Card Was CLICKED
+                        //***************UPDATE Reminder
+                        reminder.setId(recievedReminderViaIntent.getId());
+                        Log.d(TAG, "Reminder sent for updation");
+                        Snackbar.make(v, "Updated !..", Snackbar.LENGTH_SHORT)
+                                //.setAction("Undo", mOnClickListener)
+                                .setActionTextColor(Color.RED)
+                                .show();
+                        db.updateReminderOfDB(reminder);
+                    }
+                    else {//FAB Was Clicked
+                        //***************SAVE Reminder
+                        Log.d(TAG, "Reminder sent for insertion");
+                        Snackbar.make(v, "Successfully saved !..", Snackbar.LENGTH_SHORT)
+                                //.setAction("Undo", mOnClickListener)
+                                .setActionTextColor(Color.YELLOW)
+                                .show();
+                        db.insertReminderToDB(reminder);
+                    }
+                    db.close();
+
+                    //Now go Back to Home-Screen
+                    onBackPressed();
+                }
             }
         });
 
@@ -67,7 +110,23 @@ public class EditReminder extends Activity{
         discardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Just go back to Home-Screen
+                if(recievedReminderViaIntent.getId() > 0){//Card Was CLICKED
+                    //************DELETE Operation
+                    //  delete from database
+                    DatabaseHelper db = new DatabaseHelper(EditReminder.this);
+                    Log.d(TAG, "Reminder sent for deletion");
+                    Snackbar.make(v, "Deleted", Snackbar.LENGTH_SHORT)
+                            //.setAction("Undo", mOnClickListener)
+                            .setActionTextColor(Color.WHITE)
+                            .show();
+                    db.deleteReminderFromDB(recievedReminderViaIntent.getId());
+                    db.close();
+                }
+                else {//FAB Was CLICKED
+                    //Do Nothing
+                }
+
+                //Now go back to Home-Screen
                 onBackPressed();
             }
         });
@@ -108,8 +167,19 @@ public class EditReminder extends Activity{
         // Get current date
         calendar = Calendar.getInstance();
 
-        time_display_textView.setText(new SimpleDateFormat("hh:mm aa").format(calendar.getTime()));
-        date_display_textView.setText(new SimpleDateFormat("dd MMM, yyyy").format(calendar.getTime()));
+        // Initializing the layout values of UI/UX widget
+        if(recievedReminderViaIntent.getId() > 0){//Intent from CardView
+            time_display_textView.setText(recievedReminderViaIntent.getStartTime());
+            date_display_textView.setText(recievedReminderViaIntent.getDate());
+            id_display_textView.setText(recievedReminderViaIntent.getId()+"");
+            label_editText.setText(recievedReminderViaIntent.getLabel());
+        }
+        else {//Intent from MainActivity
+            time_display_textView.setText(new SimpleDateFormat("hh:mm aa").format(calendar.getTime()));
+            date_display_textView.setText(new SimpleDateFormat("dd MMM, yyyy").format(calendar.getTime()));
+            id_display_textView.setText("_tempID");
+            label_editText.setText("");
+        }
     }
 
 
@@ -147,6 +217,7 @@ public class EditReminder extends Activity{
 
     @Override
     public void onBackPressed() {
+        Log.i(TAG, "onBackPressed");
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

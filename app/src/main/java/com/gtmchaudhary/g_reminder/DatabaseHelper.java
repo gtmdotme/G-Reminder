@@ -38,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ID + " INTEGER PRIMARY KEY,"
                 + COLUMN_LABEL + " TEXT,"
                 + COLUMN_DATE + " TEXT,"
-                + COLUMN_START_TIME + " TEXT";
+                + COLUMN_START_TIME + " TEXT)";
 
         db.execSQL(CREATE_TABLE_QUERY);
         Log.d(TAG, "DB_Helper -> onCreate");
@@ -61,6 +61,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_START_TIME, reminder.getStartTime().toString());
             // Inserting Row
         db.insert(TABLE_NAME, null, values);
+
+        /***********************ONLY FOR LOGCAT*********************/
+        //Reading the inserted reminder so as to DOUBLE-Check
+        Reminder tempReminder = new Reminder();
+        tempReminder = this.readReminderFromDB(searchID(reminder));
+        Log.e(TAG, "Reminder added to DB\n"
+                        +"    ID- "+tempReminder.getId()
+                        +"    Label- "+tempReminder.getLabel()
+                        +"    Date- "+tempReminder.getDate()
+                        +"    StartTime- "+tempReminder.getStartTime()
+        );
+
         db.close(); // Closing database connection
     }
 
@@ -83,6 +95,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // Updating Row
         db.update(TABLE_NAME, values, COLUMN_ID + " = ?",
                 new String[]{String.valueOf(reminder.getId())});
+    }
+
+    //Search ID of reminder
+    int searchID(Reminder reminder){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id = -1;
+
+        Cursor cursor = null;
+        try{
+            cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE "+
+                    COLUMN_LABEL +" =? AND " +
+                    COLUMN_DATE + " =? AND " +
+                    COLUMN_START_TIME + " =?",
+                    new String[] {
+                            reminder.getLabel(),
+                            reminder.getDate(),
+                            reminder.getStartTime()
+                    });
+
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                id = cursor.getColumnIndex(COLUMN_ID);
+            }
+        }finally {
+            db.close();
+        }
+        // return id
+        return id;
     }
 
     //Read Reminder from DB

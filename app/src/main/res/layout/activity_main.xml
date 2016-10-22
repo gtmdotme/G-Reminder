@@ -3,16 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.gtmchaudhary.g_reminder.MainActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/myRecyclerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scrollbars="vertical">
     </android.support.v7.widget.RecyclerView>
 
@@ -20,10 +16,31 @@
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/fab_edit_icon"
+        android:id="@+id/fab"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/fab_edit_icon"
-        android:id="@+id/fab" />
+        android:layout_margin="10dp" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/empty_imageView"
+        android:src="@drawable/arrow"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/fab"
+        android:layout_toStartOf="@+id/fab"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Click to add new"
+        android:id="@+id/empty_textView"
+        android:layout_alignTop="@+id/empty_imageView"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -3,14 +3,16 @@ package com.gtmchaudhary.g_reminder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -28,27 +30,30 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView label_reminder;
         TextView id_reminder;
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             label_reminder = (TextView)itemView.findViewById(R.id.label_reminder);
             id_reminder = (TextView)itemView.findViewById(R.id.id_reminder);
+
+
             // Define click listener for the ViewHolder's View.
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
+                    reminder = reminders.get(getAdapterPosition());
                     Intent intent = new Intent(context, EditReminder.class);
+                    intent.putExtra("object",reminder);
                     context.startActivity(intent);
-                    /* read from id and pass reminder through intent */
 
                     Log.d(TAG, "Card Clicked");
-                    Log.d(TAG, "Reminder-> " + label_reminder.getText().toString());
+                    Log.d(TAG, "Reminder-> " + reminder.getLabel());
                 }
 
             });
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
+                public boolean onLongClick(final View v) {
                     //Show alert dialog box for delete
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                     alertDialogBuilder.setMessage("Delete this reminder ?");
@@ -57,9 +62,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
                             //You clicked "YES"
-                                /* delete reminder from database and arrayList*/
-                                /* update arrayList */
+                            //  delete from database
+                            DatabaseHelper db = new DatabaseHelper(context);
+                            reminder = reminders.get(getAdapterPosition());
+                            Log.d(TAG, "Reminder sent for deletion");
+                            db.deleteReminderFromDB(reminder.getId());
+                            //  delete from array list
+                            reminders.remove(getAdapterPosition());
+                            //  notify the adapter
+                            notifyDataSetChanged();
 
+                            Snackbar.make(itemView, "Deleted", Snackbar.LENGTH_LONG)
+                                    //.setAction("Undo", mOnClickListener)
+                                    .setActionTextColor(Color.RED)
+                                    .show();
                         }
                     });
                     alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -96,7 +112,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.label_reminder.setText(reminders.get(position).getLabel());
-        holder.id_reminder.setText(reminders.get(position).getId());
+        holder.id_reminder.setText(reminders.get(position).getId()+"");
     }
 
     @Override

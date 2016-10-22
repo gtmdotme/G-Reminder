@@ -1,9 +1,11 @@
 package com.gtmchaudhary.g_reminder;
 
+import java.io.Serializable;
+
 /**
  * Created by gtmchaudhary on 10/19/2016.
  */
-public class Reminder {
+public class Reminder implements Serializable {
     private int id;
     private String label;
     private String date;
@@ -11,6 +13,12 @@ public class Reminder {
 
 
     public Reminder() {
+    }
+
+    public Reminder(String label, String date, String startTime) {
+        this.label = label;
+        this.date = date;
+        this.startTime = startTime;
     }
 
     public Reminder(int id, String label, String date, String startTime) {
