@@ -66,4 +66,12 @@
         android:layout_marginStart="27dp"
         android:checked="false" />
 
+    <com.gtmchaudhary.g_reminder.SwipeButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/swipeButton"
+        android:layout_below="@+id/date_picker_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="91dp" />
+
 </RelativeLayout>

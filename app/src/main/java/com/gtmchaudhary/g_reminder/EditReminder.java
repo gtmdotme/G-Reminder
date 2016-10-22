@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,6 +24,7 @@ import java.util.Date;
  */
 public class EditReminder extends Activity{
 
+    public String TAG = "myReminderApp";
     public static int TIME_PICKER_ID = 1;
     public static int DATE_PICKER_ID = 2;
 
@@ -79,6 +83,30 @@ public class EditReminder extends Activity{
 
         time_display_textView.setText(new SimpleDateFormat("hh:mm aa").format(calendar.getTime()));
         date_display_textView.setText(new SimpleDateFormat("dd MMM, yyyy").format(calendar.getTime()));
+
+        //Swipe Button Functionality
+        SwipeButton mSwipeButton = (SwipeButton) findViewById(R.id.swipeButton);
+        SwipeButtonCustomItems swipeButtonSettings = new SwipeButtonCustomItems() {
+            @Override
+            public void onSwipeConfirm() {
+                Log.d(TAG, "New swipe confirm callback");
+                Toast.makeText(getApplicationContext(), "Done :)",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(EditReminder.this, MainActivity.class));
+            }
+        };
+        swipeButtonSettings
+                .setButtonPressText(">> Swipe To Save >>")
+                .setGradientColor1(0xFF888888)
+                .setGradientColor2(0xFF666666)
+                .setGradientColor2Width(60)
+                .setGradientColor3(0xFF333333)
+                .setPostConfirmationColor(0xFF888888)
+                .setActionConfirmDistanceFraction(0.7)
+                .setActionConfirmText("Saved");
+        mSwipeButton.setSwipeButtonCustomItems(swipeButtonSettings);
+
+
+
     }
 
 
