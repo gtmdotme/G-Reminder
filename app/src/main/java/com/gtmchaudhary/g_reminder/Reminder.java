@@ -1,6 +1,7 @@
 package com.gtmchaudhary.g_reminder;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * Created by gtmchaudhary on 10/19/2016.
@@ -10,6 +11,7 @@ public class Reminder implements Serializable {
     private String label;
     private String date;
     private String startTime;
+    private long calenderMillis;
 
 
     public Reminder() {
@@ -60,4 +62,12 @@ public class Reminder implements Serializable {
         this.startTime = startTime;
     }
 
+
+    public long getCalenderMillis() {
+        return calenderMillis;
+    }
+
+    public void setCalenderMillis(long calenderMillis) {
+        this.calenderMillis = calenderMillis;
+    }
 }

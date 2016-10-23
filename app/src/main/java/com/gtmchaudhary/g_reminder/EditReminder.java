@@ -17,10 +17,9 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+
 
 /**
  * Created by gtmchaudhary on 10/20/2016.
@@ -61,7 +60,7 @@ public class EditReminder extends Activity{
 
         // Get the intent
         Intent intent = getIntent();
-        final Reminder recievedReminderViaIntent = (Reminder)intent.getSerializableExtra("object");
+        final Reminder recievedReminderViaIntent = (Reminder)intent.getSerializableExtra("object");// Contains either LABEL and ID or null
 
 
         // SAVE button
@@ -73,6 +72,8 @@ public class EditReminder extends Activity{
                         date_display_textView.getText().toString(),
                         time_display_textView.getText().toString()
                 );
+                reminder.setCalenderMillis(calendar.getTimeInMillis());
+                Log.d(TAG,""+reminder.getCalenderMillis());
                 DatabaseHelper db = new DatabaseHelper(getApplicationContext());
 
                 if(reminder.getLabel().isEmpty()){
@@ -112,6 +113,7 @@ public class EditReminder extends Activity{
             public void onClick(View v) {
                 if(recievedReminderViaIntent.getId() > 0){//Card Was CLICKED
                     //************DELETE Operation
+                    recievedReminderViaIntent.setCalenderMillis(calendar.getTimeInMillis());
                     //  delete from database
                     DatabaseHelper db = new DatabaseHelper(EditReminder.this);
                     Log.d(TAG, "Reminder sent for deletion");
@@ -119,7 +121,7 @@ public class EditReminder extends Activity{
                             //.setAction("Undo", mOnClickListener)
                             .setActionTextColor(Color.WHITE)
                             .show();
-                    db.deleteReminderFromDB(recievedReminderViaIntent.getId());
+                    db.deleteReminderFromDB(recievedReminderViaIntent);
                     db.close();
                 }
                 else {//FAB Was CLICKED
@@ -169,6 +171,7 @@ public class EditReminder extends Activity{
 
         // Initializing the layout values of UI/UX widget
         if(recievedReminderViaIntent.getId() > 0){//Intent from CardView
+
             time_display_textView.setText(recievedReminderViaIntent.getStartTime());
             date_display_textView.setText(recievedReminderViaIntent.getDate());
             id_display_textView.setText(recievedReminderViaIntent.getId()+"");

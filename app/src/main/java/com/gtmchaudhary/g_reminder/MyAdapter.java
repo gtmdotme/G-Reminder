@@ -66,7 +66,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                             DatabaseHelper db = new DatabaseHelper(context);
                             reminder = reminders.get(getAdapterPosition());
                             Log.d(TAG, "Reminder sent for deletion");
-                            db.deleteReminderFromDB(reminder.getId());
+                            db.deleteReminderFromDB(reminder);
                             //  delete from array list
                             reminders.remove(getAdapterPosition());
                             //  notify the adapter
