@@ -55,18 +55,6 @@
         android:layout_toLeftOf="@+id/date_picker_button"
         android:layout_toStartOf="@+id/date_picker_button" />
 
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="All Day"
-        android:id="@+id/allDay_switch"
-        android:layout_alignBaseline="@+id/time_display_textView"
-        android:layout_toRightOf="@+id/time_picker_button"
-        android:layout_toEndOf="@+id/time_picker_button"
-        android:layout_marginLeft="27dp"
-        android:layout_marginStart="27dp"
-        android:checked="false" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

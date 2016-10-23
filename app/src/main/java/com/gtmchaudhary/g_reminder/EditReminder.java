@@ -36,7 +36,6 @@ public class EditReminder extends Activity{
     Button save_button, discardButton;
     TextView date_display_textView, time_display_textView, id_display_textView;
     EditText label_editText;
-    Switch allDay_switch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,6 @@ public class EditReminder extends Activity{
         time_display_textView = (TextView)findViewById(R.id.time_display_textView);
         id_display_textView = (TextView)findViewById(R.id.id_reminder_edit);
         label_editText = (EditText)findViewById(R.id.editText_reminder_label);
-        allDay_switch = (Switch)findViewById(R.id.allDay_switch);
 
         // Get the intent
         Intent intent = getIntent();
@@ -133,17 +131,6 @@ public class EditReminder extends Activity{
             }
         });
 
-        // All-Day switch functionality
-        allDay_switch.setChecked(false);
-        allDay_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    time_picker_button.setEnabled(false);
-                else
-                    time_picker_button.setEnabled(true);
-            }
-        });
 
 
         // TimePickerButtonListener

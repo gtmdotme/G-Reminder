@@ -17,7 +17,8 @@
         </activity>
         <activity android:name=".EditReminder">
         </activity>
-        <activity android:name=".ViewReminder">
+        <activity android:name=".ViewReminder"
+            android:noHistory="true">
         </activity>
         <receiver android:name=".NotificationReceiver"
             android:process=":remote"></receiver>

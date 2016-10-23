@@ -1,6 +1,7 @@
 package com.gtmchaudhary.g_reminder;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
@@ -74,17 +75,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         /***********************ONLY FOR LOGCAT*********************/
         //Reading the inserted reminder so as to DOUBLE-Check
-        Reminder tempx = readReminderFromDB(searchID(reminder));
         String logReminder = "Reminder INSERTED to DB"
                 +"\n    ID- "+searchID(reminder)
-                +"\n    Label- "+tempx.getLabel()
-                +"\n    Date- "+tempx.getDate()
-                +"\n    StartTime- "+tempx.getStartTime()
-                +"\n    CalenderMillis- "+tempx.getCalenderMillis();
+                +"\n    Label- "+reminder.getLabel()
+                +"\n    Date- "+reminder.getDate()
+                +"\n    StartTime- "+reminder.getStartTime()
+                +"\n    CalenderMillis- "+reminder.getCalenderMillis();
         Log.d(TAG,logReminder);
 
         //Set Alarm
         Intent intent = new Intent(context, NotificationReceiver.class);
+        intent.putExtra("notificationID",searchID(reminder));
+        intent.putExtra("label",reminder.getLabel());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
                 searchID(reminder),
@@ -124,7 +126,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, deletedReminder.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT|  Intent.FILL_IN_DATA);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
-        Log.d(TAG, "Alarm Cancelled for " + tempReminder.getDate() + " " + tempReminder.getStartTime());//+ new SimpleDateFormat("dd MMM, yyyy - hh:mm aa").format(deletedReminder.getCalendar().getTime()));
+
+
+        NotificationManager notificationManager = (NotificationManager)context.getSystemService(context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(tempReminder.getId());
+
+        Log.d(TAG, "Alarm Cancelled for " + tempReminder.getDate() + " " + tempReminder.getStartTime());
     }
 
     //Update Reminder of DB
@@ -154,12 +161,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         // Cancel and then create New alarm
+        NotificationManager notificationManager = (NotificationManager)context.getSystemService(context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(reminder.getId());
+
         Intent intent = new Intent(context, NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, reminder.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT|  Intent.FILL_IN_DATA);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
 
         intent = new Intent(context, NotificationReceiver.class);
+        intent.putExtra("notificationID",searchID(reminder));
+        intent.putExtra("label",reminder.getLabel());
         pendingIntent = PendingIntent.getBroadcast(
                 context,
                 reminder.getId(),
