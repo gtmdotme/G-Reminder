@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -47,9 +48,13 @@ public class EditReminder extends Activity{
         // Referencing UI/UX widgets
         date_picker_button = (Button)findViewById(R.id.date_picker_button);
         time_picker_button = (Button)findViewById(R.id.time_picker_button);
+        date_picker_button.getBackground().setColorFilter(0xE5EC6691, PorterDuff.Mode.MULTIPLY);
+        time_picker_button.getBackground().setColorFilter(0xE5EC6691, PorterDuff.Mode.MULTIPLY);
 
         save_button = (Button)findViewById(R.id.save_button);
         discardButton = (Button)findViewById(R.id.discard_button);
+        save_button.getBackground().setColorFilter(0xDB48E86B, PorterDuff.Mode.MULTIPLY);
+        discardButton.getBackground().setColorFilter(0XE4EF7676, PorterDuff.Mode.MULTIPLY);
 
         date_display_textView = (TextView)findViewById(R.id.date_display_textView);
         time_display_textView = (TextView)findViewById(R.id.time_display_textView);

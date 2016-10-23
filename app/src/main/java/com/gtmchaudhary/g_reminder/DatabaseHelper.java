@@ -180,7 +180,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         );
         alarmManager = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, reminder.getCalenderMillis(), pendingIntent);
-        Log.d(TAG, "Alarm Updated to " + reminder.getDate() + " " + reminder.getStartTime());//+ new SimpleDateFormat("dd MMM, yyyy - hh:mm aa").format(reminder.getCalendar().getTime()));
+        Log.d(TAG, "Alarm Updated to " + reminder.getDate() + " " + reminder.getStartTime());
     }
 
     //Search ID of reminder

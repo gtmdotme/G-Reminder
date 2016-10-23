@@ -44,14 +44,14 @@ public class ViewReminder extends Activity {
             }
         };
         swipeButtonSettings
-                .setButtonPressText(">> Swipe to Mark-As-Done >>")
+                .setButtonPressText(">> Swipe to Remove >>")
                 .setGradientColor1(0xFF888888)
                 .setGradientColor2(0xFF666666)
-                .setGradientColor2Width(60)
+                .setGradientColor2Width(100)
                 .setGradientColor3(0xFF333333)
                 .setPostConfirmationColor(0xFF888888)
                 .setActionConfirmDistanceFraction(0.7)
-                .setActionConfirmText("Done !..");
+                .setActionConfirmText(">> Swipe to Remove >>");
         if (mSwipeButton != null) {
             mSwipeButton.setSwipeButtonCustomItems(swipeButtonSettings);
         }
