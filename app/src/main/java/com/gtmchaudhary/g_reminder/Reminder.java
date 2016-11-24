@@ -1,26 +1,33 @@
 package com.gtmchaudhary.g_reminder;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * Created by gtmchaudhary on 10/19/2016.
  */
-public class Reminder {
+public class Reminder implements Serializable {
     private int id;
     private String label;
     private String date;
-    private String fromTime;
-    private String toTime;
+    private String startTime;
+    private long calenderMillis;
+
 
     public Reminder() {
     }
 
-    public Reminder(int id, String label, String date, String fromTime, String toTime) {
+    public Reminder(String label, String date, String startTime) {
+        this.label = label;
+        this.date = date;
+        this.startTime = startTime;
+    }
+
+    public Reminder(int id, String label, String date, String startTime) {
         this.id = id;
         this.label = label;
         this.date = date;
-        this.fromTime = fromTime;
-        this.toTime = toTime;
+        this.startTime = startTime;
     }
 
     public int getId() {
@@ -47,19 +54,20 @@ public class Reminder {
         this.date = date;
     }
 
-    public String getFromTime() {
-        return fromTime;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setFromTime(String fromTime) {
-        this.fromTime = fromTime;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
-    public String getToTime() {
-        return toTime;
+
+    public long getCalenderMillis() {
+        return calenderMillis;
     }
 
-    public void setToTime(String toTime) {
-        this.toTime = toTime;
+    public void setCalenderMillis(long calenderMillis) {
+        this.calenderMillis = calenderMillis;
     }
 }

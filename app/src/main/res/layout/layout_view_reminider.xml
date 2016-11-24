@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Reminder Label"
+        android:id="@+id/label_reminder_view"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:textSize="30dp" />
+
+    <com.gtmchaudhary.g_reminder.SwipeButton
+        android:layout_width="400dp"
+        android:layout_height="130dp"
+        android:id="@+id/mSwipeButton"
+        android:text=">> Swipe to Remove >>"
+        android:background="#666666"
+        android:textColor="#ffffff"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="28dp" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="Reschedule"
+        android:id="@+id/reschedule_button"
+        android:layout_marginBottom="50dp"
+        android:layout_above="@+id/mSwipeButton"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="ReminderID"
+        android:id="@+id/id_reminder_view"
+        android:layout_below="@+id/label_reminder_view"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:visibility="invisible" />
+
+</RelativeLayout>
